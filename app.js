@@ -3,11 +3,30 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose');
+const cors = require('cors')
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+// var usersRouter = require('./routes/users');
+const doctorsRouter = require('./routes/doctorsRouter');
+const departmentsRouter = require('./routes/departmentsRouter');
+const testimonialsRouter = require('./routes/testimonialsRouter');
+const appointmentsRouter = require('./routes/appointmentsRouter');
+const usersRouter = require('./routes/usersRouter');
+
+
+// DB connection 
+const url = 'mongodb://localhost:27017/conFusion';
+const connect = mongoose.connect(url);
+
+connect.then((db) => {
+    console.log("Connected correctly to server");
+}, (err) => { console.log(err); });
 
 var app = express();
+
+app.use(bodyParser.json())
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -19,8 +38,13 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use('/doctors',doctorsRouter);
+app.use('/departments',departmentsRouter);
+app.use('/testimonials',testimonialsRouter);
+app.use('/appointments',appointmentsRouter);
+app.use('/users',usersRouter);
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
