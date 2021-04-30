@@ -1,37 +1,37 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
-const UsersSchema = new Schema({
+const PatientsSchema = new Schema({
     name:{
-        require : true,
+        required : true,
         type : String
     },
     address:{
-        require : true,
+        required : true,
         type : String
     },
     yob:{
-        require : true,
+        required : true,
         type : Number
     },
     gender :{
-        require : true,
+        required : true,
         type : String
     },
     email:{
-        require : true,
+        required : true,
         type : String
     },
     telnum:{
-        require : true,
+        required : true,
         type: Number
     },
     password:{
-        require : true,
+        required : true,
         type : String
     }
 })
 
-const Users = mongoose.model('User',UsersSchema)
+const Patients = mongoose.model('Patient',PatientsSchema)
 
-module.exports = Users
+module.exports = Patients

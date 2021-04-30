@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
 const TestimonialsSchema = new Schema({
-    imgscr: {
+    image: {
         type: String,
         required: true,
     },

@@ -2,24 +2,30 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema;
 
 const AppointmentsSchema = new Schema({
-    userId:{
-        require : true,
-        type : String
+    patId:{
+        required : true,
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Patient'
     },
     docId:{
-        require : true,
-        type : String
+        required : true,
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Doctor'
     },
     date:{
-        require : true,
-        type : Number
+        required : true,
+        type : String
     },
-    time:{
-        require : true,
+    slot:{
+        required : true,
+        type: String
+    },
+    position:{
+        required : true,
         type: Number
     },
     status:{
-        require : true,
+        required : true,
         type : String
     },
     prescription:{

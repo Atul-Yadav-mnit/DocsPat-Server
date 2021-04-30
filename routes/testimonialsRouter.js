@@ -1,45 +1,46 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const Testimonials = require('../models/Testimonials')
-const mongoose = require('mongoose')
-const cors = require('../cors');
 
 const testimonialsRouter = express.Router();
 
 testimonialsRouter.use(bodyParser.json());
 
 testimonialsRouter.route('/')
-.options(cors.corsWithOptions, (req, res) => { res.sendStatus(200); 
-    res.setHeader('Content-Type', 'text/plain');})
-    .get(cors.cors,(req, res, next) => {
+    .all((req, res, next) => {
+        res.statusCode = 200;
+        res.setHeader('Content-Type', 'text/plain');
+        next();
+    })
+    .get((req, res, next) => {
 
-        Testimonials.find(req.query)
-            .then((testimonials) => {
+        Testimonials.find({})
+            .then((Testimonials) => {
                 res.setHeader('Content-Type', 'application/json');
-                res.json(testimonials);
+                res.json(Testimonials);
             }, (err) => next(err))
             .catch((err) => next(err))
 
     })
     .post((req, res, next) => {
         Testimonials.create(req.body)
-            .then((newtestinomial) => {
-                console.log('Testinomial Created ', newtestinomial);
+            .then((newTestimonial) => {
+                console.log('Testimonial Created ', newTestimonial);
                 res.statusCode = 200;
                 res.setHeader('Content-Type', 'application/json');
-                res.json(newtestinomial);
+                res.json(newTestimonial);
             }, (err) => next(err))
             .catch((err) => next(err));
     })
     .put((req, res, next) => {
         res.statusCode = 403;
-        res.end('PUT operation not supported on /testimonials');
+        res.end('PUT operation not supported on /Testimonials');
     })
     .delete((req, res, next) => {
         Testimonials.remove({})
-            .then((testimonials) => {
+            .then((Testimonials) => {
                 res.setHeader('Content-Type', 'application/json');
-                res.json(testimonials);
+                res.json(Testimonials);
             }, (err) => next(err))
             .catch((err) => next(err))
     });

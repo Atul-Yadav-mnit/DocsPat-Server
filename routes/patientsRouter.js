@@ -1,74 +1,76 @@
 const express = require('express')
 const bodyParser = require('body-parser')
-const Doctors = require('../models/Doctors')
+const Patients = require('../models/Patients')
 
-const doctorsRouter = express.Router();
+const patientsRouter = express.Router();
 
-doctorsRouter.use(bodyParser.json());
+patientsRouter.use(bodyParser.json());
 
-doctorsRouter.route('/')
+patientsRouter.route('/')
     .all((req, res, next) => {
-        console.log("res is", req)
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
         next();
     })
     .get((req, res, next) => {
-        Doctors.find()
-            .then((Doctors) => {
+
+        Patients.find({})
+            .then((Patients) => {
                 res.setHeader('Content-Type', 'application/json');
-                res.json(Doctors);
+                res.json(Patients);
             }, (err) => next(err))
             .catch((err) => next(err))
-
+    
     })
     .post((req, res, next) => {
-        Doctors.findOne({ password: req.body.password, telnum: req.body.telnum })
-            .then((Doctors) => {
-                    res.setHeader('Content-Type', 'application/json');
-                    res.json(Doctors);
+
+        Patients.findOne({ password: req.body.password, telnum: req.body.telnum })
+            .then((Patients) => {
+                res.setHeader('Content-Type', 'application/json');
+                res.json(Patients);
             }, (err) => next(err))
             .catch((err) => next(err))
+    
     })
     .put((req, res, next) => {
         res.statusCode = 403;
-        res.end("/put is not supported on /doctor")
+        res.end('PUT operation not supported on /Patients');
     })
     .delete((req, res, next) => {
-        Doctors.remove({_id:"608a7d8331046c5844fed272"})
-            .then((Doctors) => {
+        Patients.remove({})
+            .then((Patients) => {
                 res.setHeader('Content-Type', 'application/json');
-                res.json(Doctors);
+                res.json(Patients);
             }, (err) => next(err))
             .catch((err) => next(err))
     });
 
-
-doctorsRouter.route('/signup/')
+patientsRouter.route('/signup/')
     .all((req, res, next) => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'text/plain');
         next();
     })
     .post((req, res, next) => {
-        Doctors.findOne({ telnum: req.body.telnum })
-            .then((Doctor) => {
-                if (Doctor === null) {
-                    Doctors.create(req.body)
-                        .then((newDoctor) => {
-                            console.log('Doctor Created ', newDoctor);
+        Patients.findOne({ telnum: req.body.telnum })
+            .then((Patient) => {
+                if (Patient === null) {
+                    Patients.create(req.body)
+                        .then((newPatient) => {
+                            console.log('Patient Created ', newPatient);
                             res.statusCode = 200;
                             res.setHeader('Content-Type', 'application/json');
-                            res.json(newDoctor);
+                            res.json(newPatient);
                         }, (err) => next(err))
                         .catch((err) => next(err));
                 }
                 else {
-                    var Err = new Error('Doctor with mobile number ' + req.body.telnum + ' already exists!!! Kindly Login ')
+                    var Err = new Error('Patient with mobile number ' + req.body.telnum + ' already exists!!! Kindly Login ')
                     next(Err);
                 }
             }, (err) => next(err))
             .catch((err) => next(err));
     })
 
-module.exports = doctorsRouter;
+
+module.exports = patientsRouter;

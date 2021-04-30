@@ -3,19 +3,19 @@ const Schema = mongoose.Schema;
 
 const DepartmentSchema = new Schema({
     name:{
-        require : true,
+        required : true,
         type: String
     },
     nod:{
-        require : true,
+        required : true,
         type: Number
     },
     image:{
-        require : true,
+        required : true,
         type: String
     },
     details:{
-        require: true,
+        required: true,
         type: String
     }
 },{

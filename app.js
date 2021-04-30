@@ -13,8 +13,8 @@ const doctorsRouter = require('./routes/doctorsRouter');
 const departmentsRouter = require('./routes/departmentsRouter');
 const testimonialsRouter = require('./routes/testimonialsRouter');
 const appointmentsRouter = require('./routes/appointmentsRouter');
-const usersRouter = require('./routes/usersRouter');
-
+const patientsRouter = require('./routes/patientsRouter');
+const slotsRouter = require('./routes/slotsRouter')
 
 // DB connection 
 const url = 'mongodb://localhost:27017/conFusion';
@@ -26,6 +26,7 @@ connect.then((db) => {
 
 var app = express();
 
+app.use(cors())
 app.use(bodyParser.json())
 
 // view engine setup
@@ -42,7 +43,8 @@ app.use('/doctors',doctorsRouter);
 app.use('/departments',departmentsRouter);
 app.use('/testimonials',testimonialsRouter);
 app.use('/appointments',appointmentsRouter);
-app.use('/users',usersRouter);
+app.use('/patients',patientsRouter);
+app.use('/slots',slotsRouter)
 app.use('/', indexRouter);
 // app.use('/users', usersRouter);
 

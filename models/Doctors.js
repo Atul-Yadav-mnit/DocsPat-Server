@@ -3,37 +3,41 @@ const Schema = mongoose.Schema;
 
 const DoctorsSchema = new Schema({
     name:{
-        require : true,
+        required : true,
         type : String
     },
     dept:{
-        require : true,
+        required : true,
         type : String
     },
     exp:{
-        require : true,
+        required : true,
         type : Number
     },
     degree :{
-        require : true,
+        required : true,
         type : String
     },
     email:{
-        require : true,
+        required : true,
         type : String
     },
     telnum:{
-        require : true,
+        required : true,
         type: Number
     },
     password:{
-        require : true,
+        required : true,
         type : String
     },
     address:{
-        require : true,
+        required : true,
         type : String
     },
+    image:{
+        required : true,
+        type: String
+    }
 })
 
 const Doctors = mongoose.model('Doctor',DoctorsSchema)
